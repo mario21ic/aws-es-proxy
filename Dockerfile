@@ -18,4 +18,6 @@ RUN go build -o aws-es-proxy
 
 EXPOSE ${PORT_NUM}
 
+#HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD curl -sS 127.0.0.1:9200 || exit 1
+
 CMD ["./aws-es-proxy", "-h"]

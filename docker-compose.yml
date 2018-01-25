@@ -1,0 +1,19 @@
+version: "3"
+services:
+  aws-es-proxy:
+    image: mario21ic/aws-es-proxy
+    build:
+      context: ./
+    healthcheck:
+      test: curl --fail -s http://localhost:9200/ || exit 1
+      #interval: 1m30s
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - ./:/apps/
+      - ~/.aws/credentials:/root/.aws/credentials:rw
+    ports:
+      - 9200:9200
+    command: ./aws-es-proxy -endpoint ${ENDPOINT}
+
